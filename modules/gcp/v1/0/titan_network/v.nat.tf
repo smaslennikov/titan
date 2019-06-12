@@ -1,29 +1,19 @@
-# Titan Network Module - NAT Module Variables
+# Titan Network Module - Cloud NAT Module Variables
 
-variable "nat_additional_instance_labels" { default = {} }
-variable "nat_additional_instance_tags" { default = [] }
-variable "nat_additional_private_routing_tags" { default = [] }
-variable "nat_additional_ssh_cidr_blocks" { default = [] }
-variable "nat_additional_startup_script" { default = "" }
-variable "nat_allow_local_ssh_access" { default = "true" }
-variable "nat_autohealing_initial_delay" { default = "120" }
-variable "nat_healthcheck_healthy_threshold" { default = "3" }
-variable "nat_healthcheck_interval" { default = "10" }
-variable "nat_healthcheck_path" { default = "/health-check" }
-variable "nat_healthcheck_port" { default = "8080" }
-variable "nat_healthcheck_timeout" { default = "5" }
-variable "nat_healthcheck_unhealthy_threshold" { default = "6" }
-variable "nat_instance_boot_disk_size" { default = "32" }
-variable "nat_instance_boot_disk_type" { default = "pd-standard" }
-variable "nat_instance_image" { default = "centos-cloud/centos-7" }
-variable "nat_instance_labels" { default = {} }
-variable "nat_instance_metadata" { default = {} }
-variable "nat_instance_service_account" { default = [] }
-variable "nat_instance_tags" { default = ["nat-gateway", "public", "titan-dmz"] }
-variable "nat_instance_type" { default = "n1-standard-2" }
-variable "nat_max_availability_zones" { default = "3" }
-variable "nat_private_route_priority" { default = "900" }
-variable "nat_private_routing_tags" { default = ["private", "nat"] }
-variable "nat_region" { default = "us-east1" }
-variable "nat_ssh_source_tags" { default = [] }
-variable "nat_startup_script_template" { default = "" }
+# google_compute_router_nat options
+variable "nat_ip_allocate_option" { default = "AUTO_ONLY" }
+variable "nat_ips" { default = [] }
+
+variable "source_subnetwork_ip_ranges_to_nat" { default = "ALL_SUBNETWORKS_ALL_IP_RANGES" }
+
+variable "min_ports_per_vm" { default = "64" }
+variable "udp_idle_timeout_sec" { default = "30" }
+variable "icmp_idle_timeout_sec" { default = "30" }
+variable "tcp_established_idle_timeout_sec" { default = "1200" }
+variable "tcp_transitory_idle_timeout_sec" { default = "30" }
+
+variable "log_config_filter" { default = "" }
+variable "log_config_enable" { default = false }
+
+# google_compute_router options
+variable "asn" { default = "65000" }
