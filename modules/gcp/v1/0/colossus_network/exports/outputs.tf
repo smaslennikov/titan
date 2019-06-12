@@ -21,7 +21,7 @@ output "vpc_name"                       { value = "${module.network.vpc_name}" }
 output "zone"                           { value = "${module.network.zone}" }
 
 # NAT
-output "nat_public_ips"                 { value = ["${module.network.nat_public_ips}"] }
+output "nat_cloud_nat_name"             { value = ["${module.network.nat_public_ips}"] }
 
 
 # Admin Layer

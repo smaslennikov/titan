@@ -1,20 +1,36 @@
 # Colossus Network Module - NAT Resources
 
-variable "nat_instance_type"           { default = "n1-standard-2" }
-variable "nat_max_availability_zones"  { default = 5 }
-variable "nat_zonal_high_availability" { default = false }
-
-output "nat_public_ips" { value = ["${concat(module.nat.primary_public_ips, module.nat.secondary_public_ips)}"] }
+variable "nat_ip_allocate_option" { default = "AUTO_ONLY" }
+variable "nat_ips" { default = [] }
+variable "source_subnetwork_ip_ranges_to_nat" { default = "ALL_SUBNETWORKS_ALL_IP_RANGES" }
+variable "min_ports_per_vm" { default = "64" }
+variable "udp_idle_timeout_sec" { default = "30" }
+variable "icmp_idle_timeout_sec" { default = "30" }
+variable "tcp_established_idle_timeout_sec" { default = "1200" }
+variable "tcp_transitory_idle_timeout_sec" { default = "30" }
+variable "log_config_filter" { default = "" }
+variable "log_config_enable" { default = false }
+variable "asn" { default = "65000" }
 
 module "nat" {
-  source = "../colossus_nat"
+  source = "../titan_nat"
 
-  dmz_cidr_block = "${module.dmz_layer.cidr_block}"
-  dmz_subnet_id = "${module.dmz_layer.subnet_id}"
-  instance_type = "${var.nat_instance_type}"
-  max_availability_zones = "${var.nat_max_availability_zones}"
-  network_cidr_block = "${local.cidr_block}"
-  network_name = "${var.name}"
-  vpc_id = "${google_compute_network.default.self_link}"
-  zonal_high_availability = "${var.nat_zonal_high_availability}"
+  region = "${data.google_client_config.default.region}"
+
+  nat_ip_allocate_option = "${var.nat_ip_allocate_option}"
+  nat_ips = "${var.nat_ips}"
+
+  source_subnetwork_ip_ranges_to_nat = "${var.source_subnetwork_ip_ranges_to_nat}"
+
+  min_ports_per_vm = "${var.min_ports_per_vm}"
+  udp_idle_timeout_sec = "${var.udp_idle_timeout_sec}"
+  icmp_idle_timeout_sec = "${var.icmp_idle_timeout_sec}"
+  tcp_established_idle_timeout_sec = "${var.tcp_established_idle_timeout_sec}"
+  tcp_transitory_idle_timeout_sec = "${var.tcp_transitory_idle_timeout_sec}"
+
+  log_config_filter = "${var.log_config_filter}"
+  log_config_enable = "${var.log_config_enable}"
+
+  network = "${google_compute_network.default.self_link}"
+  asn = "${var.asn}"
 }
