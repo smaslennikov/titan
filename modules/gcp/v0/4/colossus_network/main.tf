@@ -20,8 +20,8 @@ variable "name" {}
 variable "name_fancy" {}
 variable "name_short" {}
 variable "public_route_priority" { default = "900" }
-variable "public_route_tags" { type = "list" default = ["colossus-dmz", "public"] }
 variable "enable_flow_logs" { default = false }
+variable "public_route_tags" { default = ["colossus-dmz", "public"] }
 
 output "cidr_block" { value = "${local.cidr_block}" }
 output "default_gateway_ipv4" { value = "${google_compute_network.default.gateway_ipv4}" }
