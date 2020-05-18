@@ -42,7 +42,14 @@ resource "google_compute_subnetwork" "default" {
   region = "${var.region}"
 
   ip_cidr_range = "${local.cidr_block}"
-  enable_flow_logs = "${var.enable_flow_logs}"
+
+  dynamic log_config {
+    for_each = var.enable_flow_logs == "" ? [] : [1]
+    content {
+      aggregation_interval = "INTERVAL_5_SEC"
+      flow_sampling = "0.5"
+    }
+  }
 
   # container range
   secondary_ip_range {
