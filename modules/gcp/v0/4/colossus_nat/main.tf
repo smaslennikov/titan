@@ -5,12 +5,12 @@ data "google_compute_zones" "available" {}
 locals {
   autohealing_initial_delay = 120
   # get a sorted list of availability zones with an upper limit set by max_availability_zones
-  availability_zones = ["${sort(slice(
+  availability_zones = sort(slice(
     data.google_compute_zones.available.names, 0, min(
       length(data.google_compute_zones.available.names),
       var.max_availability_zones
     )
-  ))}"]
+  ))
 
   healthcheck_healthy_threshold = 3
   healthcheck_interval = 10

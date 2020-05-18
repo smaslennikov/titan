@@ -1,9 +1,12 @@
 # Colossus Example for GCP
+variable region { default = "us-central1" }
 
 provider "google" {
+  region = var.region
 }
 
 provider "google-beta" {
+  region = var.region
 }
 
 data "google_compute_zones" "available" {
@@ -29,3 +32,6 @@ module "network" {
   nat_zonal_high_availability = true
 }
 
+terraform {
+  required_version = ">= 0.12"
+}

@@ -3,7 +3,7 @@
 data "google_client_config" "default" {}
 
 locals {
-  actual_public_route_tags = ["${concat(var.public_route_tags, var.addtl_public_route_tags)}"]
+  actual_public_route_tags = concat(var.public_route_tags, var.addtl_public_route_tags)
   cidr_block = "${cidrsubnet("10.0.0.0/8", 7, var.id)}"
   public_route_name = "public"
   public_zone_description = "Public Hosted Zone for the Colossus ${var.name_fancy} Network."
