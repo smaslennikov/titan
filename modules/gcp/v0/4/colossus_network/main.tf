@@ -32,7 +32,7 @@ output "name_short" { value = "${var.name_short}" }
 output "public_route_name" { value = "${local.public_route_name}" }
 output "public_route_id" { value = "${google_compute_route.public.self_link}" }
 output "public_route_priority" { value = "${var.public_route_priority}" }
-output "public_route_tags" { value = ["${local.actual_public_route_tags}"] }
+output "public_route_tags" { value = local.actual_public_route_tags }
 output "public_zone_id" { value = "${google_dns_managed_zone.public.id}" }
 output "public_zone_name" { value = "${local.public_zone_name}" }
 output "public_zone_nameservers" { value = ["${google_dns_managed_zone.public.name_servers}"] }
@@ -63,5 +63,5 @@ resource "google_compute_route" "public" {
   network = "${google_compute_network.default.self_link}"
   next_hop_gateway = "default-internet-gateway"
   priority = "${var.public_route_priority}"
-  tags = ["${local.actual_public_route_tags}"]
+  tags = local.actual_public_route_tags
 }
